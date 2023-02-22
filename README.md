@@ -1,0 +1,157 @@
+
+# [`dv`](https://github.com/edwardlavender/dv): development tools for [`R`](https://www.r-project.org/)
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/dv)](https://CRAN.R-project.org/package=dv)
+
+## Overview
+
+[`dv`](https://github.com/edwardlavender/dv) is an
+[`R`](https://www.r-project.org/) package of development tools designed
+to support [RStudio](https://posit.co/)
+[Project](https://r4ds.had.co.nz/workflow-projects.html) and
+[`R`](https://www.r-project.org/) Package set up, development and
+maintenance. This package was inspired by the
+[`utils.add`](https://github.com/edwardlavender/utils.add) and
+[`gbclr`](https://github.com/cabi-org/gbclr) packages. Existing package
+functions are grouped into the following categories:
+
+- **Directory helpers**, including useful `here::here()` wrappers;
+- **[RStudio](https://posit.co/)
+  [Project](https://r4ds.had.co.nz/workflow-projects.html) tools**,
+  including an [RStudio](https://posit.co/)
+  [Project](https://r4ds.had.co.nz/workflow-projects.html) template
+  generator;
+- **[`R`](https://www.r-project.org/) package checks**, including
+  standard ‘under-the-hood’ checks for user inputs;
+
+## Installation
+
+1.  **[`R`](https://www.r-project.org/) version.**
+    [`dv`](https://github.com/edwardlavender/dv) requires
+    [`R`](https://www.r-project.org/) version ≥ 4.1. You can check your
+    current version with `R.version.string`.
+
+2.  **Packages.** Installation requires the
+    [`devtools`](https://github.com/r-lib/devtools) and
+    [`pkgbuild`](https://github.com/r-lib/pkgbuild) packages, which can
+    be installed with `install.packages(c("devtools", "pkgbuild"))`.
+
+3.  **Rtools.** On Windows, package building requires
+    [`Rtools`](https://cran.r-project.org/bin/windows/Rtools/). You can
+    check whether
+    [`Rtools`](https://cran.r-project.org/bin/windows/Rtools/) is
+    installed with `pkgbuild::has_rtools()`. If `Rtools` is not
+    installed, it is necessary to download and install the appropriate
+    version of `Rtools` before proceeding by following the instructions
+    [here](https://cran.r-project.org/bin/windows/Rtools/).
+
+4.  **Authentication.** [`dv`](https://github.com/edwardlavender/dv) can
+    be installed via [`devtools`](https://github.com/r-lib/devtools).
+    Because [`dv`](https://github.com/edwardlavender/dv) is (at the time
+    of writing) stored in a private repository, an authentication token
+    is required for installation. Follow these steps to generate a token
+    and save it in an environmental variable in
+    [`R`](https://www.r-project.org/):
+
+    - Go to <https://github.com/settings/tokens> and click ‘Generate a
+      new token’.
+    - Select the ‘Generate new token (classic)’ option. If you are asked
+      to confirm access at this stage, follow the on-screen
+      instructions. You will arrive at the ‘New personal access token
+      (classic)’ page.
+    - Fill in the ‘Note’ at the top of the page with a memorable comment
+      that explains the purpose of the token (such as
+      ‘dv-installation’).
+    - In ‘Expiration’, the default settings are usually fine (but be
+      aware that you may need to repeat this process to re-install an
+      updated version of the package when the token expires).
+    - In ‘Select scopes’, select the ‘repo’ scope.
+    - Scroll to the bottom of the page and select ‘Generate token’.
+    - You have now created a personal access token.
+    - Now go to [`R`](https://www.r-project.org/). If you are working on
+      a [GitHub](https://github.com/) repository, make sure ‘.Rhistory’
+      is registered in ‘.gitignore’ so that the following steps are not
+      tracked (run `usethis::git_vaccinate()` if necessary). Now save
+      the token in an environmental variable called `GITHUB_PAT` via
+      `Sys.setenv(GITHUB_PAT = "insert_copied_token_here")`. If you do
+      this in an [`R`](https://www.r-project.org/) script (such as
+      `01-secrets.R`) within a [GitHub](https://github.com/) repository,
+      add the script to ‘.gitignore’ so that you do not accidentally
+      make your personal access token visible on
+      [GitHub](https://github.com/).
+
+5.  **Installation.** Install
+    [`dv`](https://github.com/edwardlavender/dv) along with its
+    dependences and vignettes via
+    [`devtools`](https://github.com/r-lib/devtools) as follows:
+
+``` r
+devtools::install_github("edwardlavender/dv", dependencies = TRUE, build_vignettes = TRUE)
+```
+
+## Functionality
+
+### Directory helpers
+
+**Directory helpers** facilitate specifying directories:
+
+- `file_path()` and `here_path()` construct file paths;
+- `here_*()` functions are `here::here()` wrappers for standard
+  directories;
+- `repair_path()` checks file/directory path validity;
+
+### [RStudio](https://posit.co/) [Project](https://r4ds.had.co.nz/workflow-projects.html) tools
+
+**[RStudio](https://posit.co/)
+[Project](https://r4ds.had.co.nz/workflow-projects.html) tools** support
+the organisation, maintenance and consistency of analytical pipelines.
+These tools include the following functions:
+
+- `use_template_proj()` creates a template [RStudio](https://posit.co/)
+  [Project](https://r4ds.had.co.nz/workflow-projects.html);
+- `use_template_gitignore()` creates a template .gitignore file;
+- `use_template_readme()` creates a template README file;
+- `use_template_script()` creates a template script;
+- `use_template_tree()` creates a directory tree;
+
+### [`R`](https://www.r-project.org/) package checks (`check_*()`)
+
+**[`R`](https://www.r-project.org/) package checks** include useful
+check functions for package functions:
+
+- 
+
+## Usage
+
+``` r
+# Load and attach package
+library(dv)
+# Get help
+help("dv")
+# Get complete list of exported functions 
+help(package = "dv")
+```
+
+## Workflows
+
+[`dv`](https://github.com/edwardlavender/dv) encourages a standardised
+workflow for analytical work based on [RStudio](https://posit.co/)
+[Projects](https://r4ds.had.co.nz/workflow-projects.html). Package
+functions facilitate the creation of standardised projects, data
+acquisition, project management and replication.
+
+## Citation
+
+Lavender, E. (2022). `dv`: Development tools for R. R package version
+0.0.0.9000. <https://github.com/edwardlavender/dv>
+
+## Code of Conduct
+
+Please note that the dv project is released with a [Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
+------------------------------------------------------------------------

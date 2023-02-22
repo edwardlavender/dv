@@ -8,8 +8,15 @@ Authors@R:
            comment = c(ORCID = "0000-0002-8040-7489"))
 Description: Supporting tools for the development of RStudio projects and R Packages, including for project set up, maintainence and checks. 
 License: MIT + file LICENSE
+Imports:
+    rlang, glue
 Suggests: 
-    testthat (>= 3.0.0)
+    stringr,
+    rstudioapi, usethis, rprojroot, here, R.utils, pacman,
+    knitr, markdown, rmarkdown, spelling,
+    lifecycle, cli, 
+    testthat (>= 3.0.0), covr
+Depends: R (>= 4.1)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
