@@ -304,6 +304,7 @@ use_template_script <- function(file, open = rlang::is_interactive(), overwrite 
   add_title_para("Wipe workspace")
   cat("rm(list = ls()) \n")
   cat('try(pacman::p_unload("all"), silent = TRUE) \n')
+  cat('cat("\014") \n')
   add_space()
   add_title_para("Essential packages")
   add_spaces()
