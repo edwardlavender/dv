@@ -40,7 +40,7 @@ dv::use_template_proj()
 dv::use_template_gitignore()
 
 # Add a README and associated files
-usethis::use_code_of_conduct("insert_name_here")
+usethis::use_code_of_conduct("insert_email_here")
 dv::use_template_readme(title = "README",
                         author = "insert_name_here",
                         email = "insert_email_here")
@@ -53,7 +53,7 @@ dv::use_template_script(here_r("insert_script_name_2.R"))
 # Save the project directory 'tree'
 # ... This enables the project directory tree to be rebuilt on another machine
 # ... This function should be re-run when the directory tree is updated
-dv::use_template_tree(save = here_data("inst", "tree.rds"))
+dv::use_template_tree(save = dv::here_data("inst", "tree.rds"))
 
 #### Update renv
 ## Take snapshot
