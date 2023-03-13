@@ -3,6 +3,7 @@
 export(check_class)
 export(check_dir_exists)
 export(check_file_exists)
+export(clear)
 export(file_path)
 export(here_data)
 export(here_data_raw)

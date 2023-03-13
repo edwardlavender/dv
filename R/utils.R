@@ -1,3 +1,8 @@
+#' @title Clear the console
+#' @description This function is a wrapper for `cat("\014")`.
+#' @export
+clear <- function() cat("\014")
+
 #' @title Glue items into a sentence
 #' @param text A character string.
 #' @param items A character vector.
