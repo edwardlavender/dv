@@ -117,6 +117,9 @@ renv::snapshot()
 # ... where they are needed.
 renv::clean()
 
+#### Save sessionInfo
+saveRDS(sessionInfo(), dv::here_data("inst", "session-info.rds"))
+
 #### Save the project directory 'tree'
 # ... This enables the project directory tree to be rebuilt on another machine
 # ... This function should be re-run when the directory tree is updated
