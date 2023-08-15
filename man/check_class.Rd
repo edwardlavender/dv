@@ -20,7 +20,7 @@ This function checks an object's class.
 \examples{
 \dontrun{
 check_class(as.numeric(1:10), "numeric") # works
-check_class(1:10, "character")           # error
+check_class(1:10, "character") # error
 }
 }
 \author{

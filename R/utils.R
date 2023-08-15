@@ -12,19 +12,20 @@ clear <- function() cat("\014")
 #' \dontrun{
 #'
 #' glue_items("This is a list of item(s):", letters[1:5])
-#'
 #' }
 #' @author Edward Lavender
 #' @keywords internal
 
-glue_items <- function(text, items){
+glue_items <- function(text, items) {
   if (all(items == "")) {
     rlang::warn("`items` is an empty string ('').")
     out <- paste0(text, "\n")
   } else {
-    out <- glue::glue("{text} '",
-                      glue::glue_collapse(items, sep = "', '"), "'.\n
-             ")
+    out <- glue::glue(
+      "{text} '",
+      glue::glue_collapse(items, sep = "', '"), "'.\n
+             "
+    )
   }
   out
 }

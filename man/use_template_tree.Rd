@@ -53,12 +53,12 @@ dir.create(file.path(proj, "data", "ignore"))
 
 #### Example (1): Generating a tree for a project
 # Generate tree using default options
-( use_template_tree(root = proj) )
+(use_template_tree(root = proj))
 # Ignore certain directories
-( use_template_tree(root = proj, ignore = "ignore") )
+(use_template_tree(root = proj, ignore = "ignore"))
 # Save the tree
-tree_path <-  file.path(proj, "data", "inst", "tree.rds")
-( use_template_tree(root = proj, save = tree_path) )
+tree_path <- file.path(proj, "data", "inst", "tree.rds")
+(use_template_tree(root = proj, save = tree_path))
 file.exists(tree_path)
 
 #### Example (2): Recreate the tree in a new project
@@ -69,10 +69,12 @@ usethis::create_project(new, open = FALSE)
 tree <- readRDS(tree_path)
 # Save and recreate the tree in the new project
 dir.create(file.path(new, "data", "dv"), recursive = TRUE)
-success <- use_template_tree(root = new,
-                             tree = tree,
-                             save = file.path(new, "data", "dv", "tree.rds"),
-                             recreate = TRUE)
+success <- use_template_tree(
+  root = new,
+  tree = tree,
+  save = file.path(new, "data", "dv", "tree.rds"),
+  recreate = TRUE
+)
 # The tree now exists in the new path
 file.exists(file.path(new, "data", "dv", "tree.rds"))
 # Examine the logical vector that defines whether or not each tree element

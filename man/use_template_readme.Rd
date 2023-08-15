@@ -56,11 +56,12 @@ usethis::create_project(path = proj, open = FALSE)
 # ... see `use_template_proj()` and associated functions
 
 #### Example (1): Use a template readme
-use_template_readme(title = "DV",
-                    author = "Edward Lavender",
-                    email = "el72@st-andrews.ac.uk",
-                    root = proj
-                    )
+use_template_readme(
+  title = "DV",
+  author = "Edward Lavender",
+  email = "el72@st-andrews.ac.uk",
+  root = proj
+)
 list.files(proj)
 
 }

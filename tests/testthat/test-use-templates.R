@@ -6,4 +6,3 @@ test_that("use_template_script() generates a file.", {
     expect_error(use_template_script(con, overwrite = FALSE))
   }
 })
-

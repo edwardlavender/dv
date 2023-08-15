@@ -20,7 +20,7 @@ The function is used for the side effect of generating a template R script.
 This function generates a template R script.
 }
 \examples{
-if(interactive()) use_template_script(file.path(tempdir(), "tmp.R"))
+if (interactive()) use_template_script(file.path(tempdir(), "tmp.R"))
 }
 \seealso{
 \code{\link[=use_template_proj]{use_template_proj()}}, \code{\link[=use_template_gitignore]{use_template_gitignore()}}, \code{\link[=use_template_readme]{use_template_readme()}}, \code{\link[=use_template_script]{use_template_script()}}, \code{\link[=use_template_tree]{use_template_tree()}}

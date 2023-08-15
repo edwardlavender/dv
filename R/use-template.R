@@ -39,12 +39,11 @@
 #' @export
 
 use_template_proj <- function(root = rprojroot::find_rstudio_root_file(),
-                              overwrite = FALSE){
-
+                              overwrite = FALSE) {
   #### Define helpers
   rlang::check_installed("rprojroot")
   root <- check_dir_exists(root)
-  create_dir <- function(dir){
+  create_dir <- function(dir) {
     if (!dir.exists(dir)) {
       dir.create(dir)
     } else {
@@ -53,24 +52,30 @@ use_template_proj <- function(root = rprojroot::find_rstudio_root_file(),
   }
 
   #### Define directories
-  lapply(c("data-raw", "data", "R", "dev", "doc", "fig"), function(folder){
+  lapply(c("data-raw", "data", "R", "dev", "doc", "fig"), function(folder) {
     create_dir(file.path(root, folder))
   })
   create_dir(file.path(root, "dev", "templates"))
   create_dir(file.path(root, "data", "inst"))
 
   #### Add template scripts
-  sys_file <- function(...)
-    system.file("proj", "template_script",..., package = "dv", mustWork = TRUE)
-  mapply(list("01-dev.R", "02-clone.R",
-              "define_global_param.R", "define_helpers.R"),
-         list("dev", "dev", "R", "R"),
-         FUN = function(file, folder){
-    out <-  file.path(root, folder, file)
-    success <- file.copy(sys_file(file), out, overwrite = overwrite)
-    if (!success)
-      rlang::warn(glue::glue("The file '{file}' already exists."))
-  })
+  sys_file <- function(...) {
+    system.file("proj", "template_script", ..., package = "dv", mustWork = TRUE)
+  }
+  mapply(
+    list(
+      "01-dev.R", "02-clone.R",
+      "define_global_param.R", "define_helpers.R"
+    ),
+    list("dev", "dev", "R", "R"),
+    FUN = function(file, folder) {
+      out <- file.path(root, folder, file)
+      success <- file.copy(sys_file(file), out, overwrite = overwrite)
+      if (!success) {
+        rlang::warn(glue::glue("The file '{file}' already exists."))
+      }
+    }
+  )
   invisible(NULL)
 }
 
@@ -116,18 +121,20 @@ use_template_proj <- function(root = rprojroot::find_rstudio_root_file(),
 #' @author Edward Lavender
 #' @export
 
-use_template_gitignore <- function(root = rprojroot::find_rstudio_root_file()){
+use_template_gitignore <- function(root = rprojroot::find_rstudio_root_file()) {
   rlang::check_installed(c("rprojroot", "usethis"))
   root <- check_dir_exists(root)
   usethis::git_vaccinate()
   con <- file.path(root, ".gitignore")
   check_file_exists(con)
   write <- function(x) cat(paste0(x, "\n"), file = con, append = TRUE)
-  ignore <- c("\n data-raw/",
-              "data/*", "!data/inst",
-              "doc/",
-              "fig/",
-              "*.html", "*.pdf", "*.docx")
+  ignore <- c(
+    "\n data-raw/",
+    "data/*", "!data/inst",
+    "doc/",
+    "fig/",
+    "*.html", "*.pdf", "*.docx"
+  )
   sapply(ignore, write)
   invisible(NULL)
 }
@@ -165,11 +172,12 @@ use_template_gitignore <- function(root = rprojroot::find_rstudio_root_file()){
 #' # ... see `use_template_proj()` and associated functions
 #'
 #' #### Example (1): Use a template readme
-#' use_template_readme(title = "DV",
-#'                     author = "Edward Lavender",
-#'                     email = "el72@st-andrews.ac.uk",
-#'                     root = proj
-#'                     )
+#' use_template_readme(
+#'   title = "DV",
+#'   author = "Edward Lavender",
+#'   email = "el72@st-andrews.ac.uk",
+#'   root = proj
+#' )
 #' list.files(proj)
 #'
 #' @seealso [`use_template_proj()`], [`use_template_gitignore()`], [`use_template_readme()`], [`use_template_script()`], [`use_template_tree()`]
@@ -180,7 +188,7 @@ use_template_readme <- function(title = "README",
                                 author,
                                 email,
                                 root = rprojroot::find_rstudio_root_file(),
-                                open = rlang::is_interactive()){
+                                open = rlang::is_interactive()) {
   # Checks
   rlang::check_installed(c("rprojroot", "usethis", "knitr"))
   if (missing(author)) rlang::abort("`author` argument is required.")
@@ -198,16 +206,19 @@ use_template_readme <- function(title = "README",
     # Read template readme contents
     template <-
       system.file("proj", "README_template.Rmd",
-                  package = "dv", mustWork = TRUE) |>
+        package = "dv", mustWork = TRUE
+      ) |>
       readLines(warn = FALSE)
     # Update template with project-specific information
     inserts <- list(title = title, author = author, email = email)
     for (i in seq_len(length(inserts))) {
       template <-
-        gsub(pattern = paste0("insert_", names(inserts)[i]),
-             replacement = inserts[[i]],
-             x = template,
-             ignore.case = FALSE)
+        gsub(
+          pattern = paste0("insert_", names(inserts)[i]),
+          replacement = inserts[[i]],
+          x = template,
+          ignore.case = FALSE
+        )
     }
     # Overwrite readme contents with (updated) template
     file <- file.path(root, "README.Rmd")
@@ -215,8 +226,9 @@ use_template_readme <- function(title = "README",
     # Update md file
     knitr::knit(file)
     # Open file
-    if (open && requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable())
+    if (open && requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
       rstudioapi::navigateToFile(file)
+    }
   }
   invisible(TRUE)
 }
@@ -229,17 +241,19 @@ use_template_readme <- function(title = "README",
 #' @param overwrite A logical variable that defines whether or not to overwrite `file` if it already exists.
 #' @return The function is used for the side effect of generating a template R script.
 #' @examples
-#' if(interactive()) use_template_script(file.path(tempdir(), "tmp.R"))
+#' if (interactive()) use_template_script(file.path(tempdir(), "tmp.R"))
 #' @seealso [`use_template_proj()`], [`use_template_gitignore()`], [`use_template_readme()`], [`use_template_script()`], [`use_template_tree()`]
 #' @author Edward Lavender
 #' @export
 
-use_template_script <- function(file, open = rlang::is_interactive(), overwrite = FALSE){
-
+use_template_script <- function(file, open = rlang::is_interactive(), overwrite = FALSE) {
   #### Define helper functions
-  add_space          <- function() cat("\n")
-  add_spaces         <- function() { add_space(); add_space() }
-  add_title_para     <- function(title){
+  add_space <- function() cat("\n")
+  add_spaces <- function() {
+    add_space()
+    add_space()
+  }
+  add_title_para <- function(title) {
     cat(glue::glue("{glue::glue_collapse(rep('#', 4))} {title}"))
     add_space()
   }
@@ -249,15 +263,15 @@ use_template_script <- function(file, open = rlang::is_interactive(), overwrite 
     add_space()
   }
   # add_hash       <- function() cat("# \n")
-  add_hash_num   <- function(x) cat(paste0("# ", x, ") \n"))
-  add_hash_line  <- function() cat(glue::glue_collapse(rep("#", 25)))
+  add_hash_num <- function(x) cat(paste0("# ", x, ") \n"))
+  add_hash_line <- function() cat(glue::glue_collapse(rep("#", 25)))
   add_hash_lines <- function(end = FALSE) {
     add_hash_line()
     add_space()
     add_hash_line()
     if (!end) add_space()
   }
-  add_section <- function(title){
+  add_section <- function(title) {
     add_hash_lines()
     add_title_section(title)
     add_title_para("")
@@ -321,8 +335,9 @@ use_template_script <- function(file, open = rlang::is_interactive(), overwrite 
 
   ## Close sink and open file
   sink()
-  if (open && requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable())
+  if (open && requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
     rstudioapi::navigateToFile(file)
+  }
   invisible(NULL)
 }
 
@@ -352,12 +367,12 @@ use_template_script <- function(file, open = rlang::is_interactive(), overwrite 
 #'
 #' #### Example (1): Generating a tree for a project
 #' # Generate tree using default options
-#' ( use_template_tree(root = proj) )
+#' (use_template_tree(root = proj))
 #' # Ignore certain directories
-#' ( use_template_tree(root = proj, ignore = "ignore") )
+#' (use_template_tree(root = proj, ignore = "ignore"))
 #' # Save the tree
-#' tree_path <-  file.path(proj, "data", "inst", "tree.rds")
-#' ( use_template_tree(root = proj, save = tree_path) )
+#' tree_path <- file.path(proj, "data", "inst", "tree.rds")
+#' (use_template_tree(root = proj, save = tree_path))
 #' file.exists(tree_path)
 #'
 #' #### Example (2): Recreate the tree in a new project
@@ -368,10 +383,12 @@ use_template_script <- function(file, open = rlang::is_interactive(), overwrite 
 #' tree <- readRDS(tree_path)
 #' # Save and recreate the tree in the new project
 #' dir.create(file.path(new, "data", "dv"), recursive = TRUE)
-#' success <- use_template_tree(root = new,
-#'                              tree = tree,
-#'                              save = file.path(new, "data", "dv", "tree.rds"),
-#'                              recreate = TRUE)
+#' success <- use_template_tree(
+#'   root = new,
+#'   tree = tree,
+#'   save = file.path(new, "data", "dv", "tree.rds"),
+#'   recreate = TRUE
+#' )
 #' # The tree now exists in the new path
 #' file.exists(file.path(new, "data", "dv", "tree.rds"))
 #' # Examine the logical vector that defines whether or not each tree element
@@ -394,12 +411,12 @@ use_template_tree <- function(root = rprojroot::find_rstudio_root_file(),
                               tree = NULL,
                               ignore = c(".git", ".Rproj.user", "renv", "docs", "deprecated"),
                               save = NULL,
-                              recreate = ifelse(is.null(tree), FALSE, TRUE)){
-
+                              recreate = ifelse(is.null(tree), FALSE, TRUE)) {
   #### Checks
   rlang::check_installed("stringr")
-  if (is.null(tree) && recreate)
+  if (is.null(tree) && recreate) {
     rlang::abort("`tree` is NULL and recreate is TRUE; either you want to list the directories in `root` or you want to recreate previously listed directories elsewhere.")
+  }
 
   #### Define tree
   out <- NULL
@@ -409,8 +426,9 @@ use_template_tree <- function(root = rprojroot::find_rstudio_root_file(),
     if (!is.null(ignore)) {
       # Drop any 'top level' directories to be ignored
       bool_ignore <- sapply(ignore, function(ig) stringr::str_detect(tree, ig))
-      if (length(ignore) > 1)
+      if (length(ignore) > 1) {
         bool_ignore <- apply(bool_ignore, 1, any)
+      }
       if (any(bool_ignore)) {
         which_ignore <- which(bool_ignore)
         tree <- tree[-which_ignore]
@@ -423,8 +441,9 @@ use_template_tree <- function(root = rprojroot::find_rstudio_root_file(),
     tree <- substr(tree, nchar(root) + 2, nchar(tree))
     if (!is.null(ignore)) {
       bool_ignore <- sapply(ignore, function(ig) stringr::str_detect(tree, ig))
-      if (length(ignore) > 1)
+      if (length(ignore) > 1) {
         bool_ignore <- apply(bool_ignore, 1, any)
+      }
       if (any(bool_ignore)) {
         which_ignore <- which(bool_ignore)
         tree <- tree[-which_ignore]
@@ -459,4 +478,3 @@ use_template_tree <- function(root = rprojroot::find_rstudio_root_file(),
   #### Return outputs
   invisible(out)
 }
-

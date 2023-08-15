@@ -84,7 +84,7 @@ devtools::install_github("edwardlavender/dv", dependencies = TRUE, build_vignett
 library(dv)
 # Get help
 help("dv")
-# Get complete list of exported functions 
+# Get complete list of exported functions
 help(package = "dv")
 ```
 

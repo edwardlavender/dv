@@ -24,7 +24,6 @@ This is a simple wrapper for \code{\link[glue:glue]{glue::glue()}} that appends 
 \dontrun{
 
 glue_items("This is a list of item(s):", letters[1:5])
-
 }
 }
 \author{

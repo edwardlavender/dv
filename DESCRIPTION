@@ -11,7 +11,7 @@ License: MIT + file LICENSE
 Imports:
     rlang, glue
 Suggests: 
-    stringr,
+    dplyr, readr, stringr, 
     rstudioapi, usethis, rprojroot, here, R.utils, pacman,
     knitr, markdown, rmarkdown, spelling,
     lifecycle, cli, 

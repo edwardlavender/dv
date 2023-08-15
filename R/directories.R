@@ -30,9 +30,10 @@
 
 .path <- function(..., f) {
   path <- f(...)
-  if (tools::file_ext(path) == "")
+  if (tools::file_ext(path) == "") {
     rlang::abort("File path does not have an extension.")
-  dir  <- dirname(path)
+  }
+  dir <- dirname(path)
   if (!dir.exists(dir)) {
     message(glue::glue("New directory '{dir}' created."))
     dir.create(dir, recursive = TRUE)
@@ -43,14 +44,14 @@
 #' @rdname file_path
 #' @export
 
-file_path <- function(...){
+file_path <- function(...) {
   .path(..., f = file.path)
 }
 
 #' @rdname file_path
 #' @export
 
-here_path <- function(...){
+here_path <- function(...) {
   rlang::check_installed("here")
   .path(..., f = here::here)
 }
@@ -135,7 +136,7 @@ here_doc <- function(...) here::here("doc", ...)
 #' @author Edward Lavender
 #' @export
 
-repair_path <- function(path){
+repair_path <- function(path) {
   valid <- any(dir.exists(path) | file.exists(path))
   if (valid) {
     cat("`path` as inputted is valid. Full `path` returned.\n")
@@ -143,11 +144,8 @@ repair_path <- function(path){
     cat("`path` as inputted is not valid. Valid portion of `path` returned.\n")
   }
   while (!valid && path != ".") {
-    path  <- dirname(path)
+    path <- dirname(path)
     valid <- dir.exists(path)
   }
   path
 }
-
-
-
