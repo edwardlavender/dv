@@ -19,16 +19,38 @@
 
 #### Option (1): Automatic restoration via renv
 # Restore the project's dependencies (including dv) from the lockfile
-renv::restore()
+restore <- tryCatch(renv::restore(), error = function(e) e)
 
 #### Option (2): Manual re-installation of packages
+if (inherits(restore, "error")) {
 
-## B) Install CRAN dependencies (if necessary)
-# This code requires modification if there are packages stored elsewhere
-custom  <- ""
-depends <- sort(unique(renv::dependencies()$Package))
-cran    <- depends[!(depends %in% custom)]
-renv::install(cran)
+  # Read dependency list
+  pkg <- readRDS(file.path("data", "inst", "dependencies.rds"))
+  # Manually re-install packages
+  inst_log <-
+    lapply(split(pkg, seq_len(nrow(pkg))), function(d) {
+      success <- tryCatch(eval(parse(text = d$install)),
+                          error = function(e) e)
+
+      if (!inherits(success, "error")) {
+        msg <- ""
+        success <- TRUE
+      } else {
+        msg <- as.character(success)
+        success <- FALSE
+      }
+      d$success <- success
+      d$msg     <- msg
+      d
+    })
+  # Check success
+  inst_log <- do.call(rbind, inst_log)
+  inst_log
+
+  # Manually handle any failures e.g., via renv::hydrate().
+  # ... OK.
+
+}
 
 
 ###########################
