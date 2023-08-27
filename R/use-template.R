@@ -303,7 +303,7 @@ use_template_script <- function(file, open = rlang::is_interactive(), overwrite 
   add_title_section(basename(file))
 
   add_title_para("Aims")
-  add_hash_num(2)
+  add_hash_num(1)
   add_space()
 
   add_title_para("Prerequisites")
