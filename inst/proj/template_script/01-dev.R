@@ -22,16 +22,16 @@ usethis::git_vaccinate()
 renv::init()
 
 #### Install package(s)
-renv::install("edwardlavender/dv")
+renv::install("edwardlavender/dv", prompt = FALSE)
 # commonmark/(r)markdown packages (for README documentation)
 if (!requireNamespace("commonmark", quietly = TRUE))
-  renv::install("commonmark")
+  renv::install("commonmark", prompt = FALSE)
 if (!requireNamespace("markdown", quietly = TRUE))
-  renv::install("markdown")
+  renv::install("markdown", prompt = FALSE)
 if (!requireNamespace("rmarkdown", quietly = TRUE))
-  renv::install("rmarkdown")
+  renv::install("rmarkdown", prompt = FALSE)
 if (!requireNamespace("yaml", quietly = TRUE))
-  renv::install("yaml")
+  renv::install("yaml", prompt = FALSE)
 
 #### Use dv templates
 
@@ -48,7 +48,8 @@ dv::use_template_readme(title = "README",
                         email = "insert_email_here")
 
 # Add template scripts
-if (!requireNamespace("pacman", quietly = TRUE)) renv::install("pacman")
+if (!requireNamespace("pacman", quietly = TRUE))
+  renv::install("pacman", prompt = FALSE)
 dv::use_template_script(here_r("insert_script_name_1.R"))
 dv::use_template_script(here_r("insert_script_name_2.R"))
 
