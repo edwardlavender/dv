@@ -73,9 +73,9 @@ Note that the `data-raw/`, `data/` (except `data/inst/`), `fig/` and `doc` direc
 
 Follow the steps described below to clone the project and reproduce the workflow.
 
-1.  **Clone the project** via GitHub. Follow the instructions in `dev/03-clone.R` to update project secrets, packages and directories:
+1.  **Clone the project** via GitHub. Follow the instructions in `dev/02-clone.R` to install packages and directories:
 
-    -   **Packages.** Continue through `dev/02-clone.R` to use [`renv`](https://rstudio.github.io/renv/articles/renv.html) to regenerate the local project library. Packages can also be manually reinstalled via `02-clone.R`.
+    -   **Packages.** Work through `dev/02-clone.R` to use [`renv`](https://rstudio.github.io/renv/articles/renv.html) to regenerate the local project library. Packages can also be manually reinstalled via `02-clone.R`.
     -   **Directories.** Rebuild the project directory tree, via `dv::use_template_proj()` and `dv::use_template_tree()`.
 
 2.  **Source (raw) data** via the links provided (or the authors).
