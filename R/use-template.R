@@ -127,15 +127,23 @@ use_template_gitignore <- function(root = rprojroot::find_rstudio_root_file()) {
   usethis::git_vaccinate()
   con <- file.path(root, ".gitignore")
   check_file_exists(con)
+  gitignore <- readLines(con)
   write <- function(x) cat(paste0(x, "\n"), file = con, append = TRUE)
   ignore <- c(
-    "\n data-raw/",
+    "data-raw/",
     "data/*", "!data/inst",
     "doc/",
     "fig/",
     "*.html", "*.pdf", "*.docx"
   )
-  sapply(ignore, write)
+  sapply(ignore, function(ig) {
+    # print(ig)
+    if (all(!gitignore == stringr::str_trim(ig))) {
+      write(ig)
+    } else {
+      rlang::warn(glue::glue("'{ig}' detected in .gitignore."))
+    }
+  })
   invisible(NULL)
 }
 
