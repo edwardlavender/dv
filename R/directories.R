@@ -89,6 +89,11 @@ here_r <- function(...) here::here("R", ...)
 #' @rdname here_
 #' @export
 
+here_src <- function(...) here::here("src", ...)
+
+#' @rdname here_
+#' @export
+
 here_dev <- function(...) here::here("dev", ...)
 
 #' @rdname here_

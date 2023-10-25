@@ -5,6 +5,7 @@
 \alias{here_data_raw}
 \alias{here_data}
 \alias{here_r}
+\alias{here_src}
 \alias{here_dev}
 \alias{here_fig}
 \alias{here_doc}
@@ -15,6 +16,8 @@ here_data_raw(...)
 here_data(...)
 
 here_r(...)
+
+here_src(...)
 
 here_dev(...)
 
