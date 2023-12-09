@@ -106,6 +106,21 @@ here_fig <- function(...) here::here("fig", ...)
 
 here_doc <- function(...) here::here("doc", ...)
 
+#' @title Source helpers
+#' @description This function sources R scripts in `src/`.
+#' @param ... Arguments passed to [`here_src()`].
+#' @return The function returns `invisible(TRUE)`.
+#' @author Edward Lavender
+#' @export
+
+src <- function(...) {
+  files <- list.files(here_src(...), full.names = TRUE, pattern = "\\.R$")
+  if (length(files) > 0L) {
+    lapply(files, source)
+  }
+  invisible(TRUE)
+}
+
 #' @title Directory helper: check path validity
 #' @description This function identifies whether or not a file or directory path is valid and, if not, determines the valid portion of the path.
 #' @param path A character string defining the file/directory path.
