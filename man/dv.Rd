@@ -2,6 +2,7 @@
 % Please edit documentation in R/dv-package.R
 \docType{package}
 \name{dv}
+\alias{dv-package}
 \alias{dv}
 \title{\code{dv}: Development tools for R}
 \description{
