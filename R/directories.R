@@ -109,12 +109,13 @@ here_doc <- function(...) here::here("doc", ...)
 #' @title Source helpers
 #' @description This function sources R scripts in `src/`.
 #' @param ... Arguments passed to [`here_src()`].
+#' @param recursive A `logical` variable passed to [`list.files()`].
 #' @return The function returns `invisible(TRUE)`.
 #' @author Edward Lavender
 #' @export
 
-src <- function(...) {
-  files <- list.files(here_src(...), full.names = TRUE, pattern = "\\.R$")
+src <- function(..., recursive = TRUE) {
+  files <- list.files(here_src(...), full.names = TRUE, pattern = "\\.R$", recursive = recursive)
   if (length(files) > 0L) {
     lapply(files, source)
   }

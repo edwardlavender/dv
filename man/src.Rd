@@ -4,10 +4,12 @@
 \alias{src}
 \title{Source helpers}
 \usage{
-src(...)
+src(..., recursive = TRUE)
 }
 \arguments{
 \item{...}{Arguments passed to \code{\link[=here_src]{here_src()}}.}
+
+\item{recursive}{A \code{logical} variable passed to \code{\link[=list.files]{list.files()}}.}
 }
 \value{
 The function returns \code{invisible(TRUE)}.
