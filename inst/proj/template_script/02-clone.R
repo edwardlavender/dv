@@ -26,7 +26,12 @@ if (inherits(restore, "error")) {
 
   # Read dependency list
   pkg <- readRDS(file.path("data", "inst", "dependencies.rds"))
-  # Manually re-install packages
+  # Install {renv}
+  if (!requireNamespace("renv", quietly = TRUE)) {
+    install.packages("renv")
+  }
+  # Manually re-install packages using {renv}
+  t1 <- Sys.time()
   inst_log <-
     lapply(split(pkg, seq_len(nrow(pkg))), function(d) {
       success <- tryCatch(eval(parse(text = d$install)),
@@ -44,6 +49,8 @@ if (inherits(restore, "error")) {
       d
     })
   # Check success
+  t2 <- Sys.time()
+  difftime(t2, t1)
   inst_log <- do.call(rbind, inst_log)
   inst_log
 
