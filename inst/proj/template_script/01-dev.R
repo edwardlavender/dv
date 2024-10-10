@@ -32,6 +32,9 @@ if (!requireNamespace("rmarkdown", quietly = TRUE))
   renv::install("rmarkdown", prompt = FALSE)
 if (!requireNamespace("yaml", quietly = TRUE))
   renv::install("yaml", prompt = FALSE)
+# stringr for dv::use_template
+if (!requireNamespace("stringr", quietly = TRUE))
+  renv::install("stringr", prompt = FALSE)
 
 #### Use dv templates
 
@@ -50,8 +53,8 @@ dv::use_template_readme(title = "README",
 # Add template scripts
 if (!requireNamespace("pacman", quietly = TRUE))
   renv::install("pacman", prompt = FALSE)
-dv::use_template_script(here_r("insert_script_name_1.R"))
-dv::use_template_script(here_r("insert_script_name_2.R"))
+dv::use_template_script(dv::here_r("insert_script_name_1.R"))
+dv::use_template_script(dv::here_r("insert_script_name_2.R"))
 
 
 ###########################
